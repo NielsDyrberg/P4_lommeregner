@@ -1,51 +1,116 @@
+-- A Moore machine's outputs are dependent only on the current state.
+-- The output is written only when the state changes.  (State
+-- transitions are synchronous.)
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.NUMERIC_STD.all;
 use work.cu_lib.all;
 
+
 entity CU is
+
 	port(
-		clk, rst, ready 				: in	STD_LOGIC;
-		rw, vma, opregSel, errorSel,
-		addrSel, instrSel, oe		: out std_logic;
-		outSel							: out std_logic_vector(1 downto 0);
-		regSel							: out std_logic_vector(4 downto 0); 
-		shiftSel							: out std_logic_vector(2 downto 0);
-		aluSel							: out std_logic_vector(3 downto 0);
-		status							: in 	std_logic_vector(4 downto 0);
-		instrReg							: in 	std_logic_vector(19 downto 0)
+		clk_cu		: in	std_logic;
+		data_in_cu	: in	std_logic;
+		reset_cu	 	: in	std_logic;
+		data_out_cu	: out	std_logic_vector(2 downto 0)
 	);
-end CU;
+	
+end entity;
 
 architecture rtl of CU is
-	signal cur_state, nxt_state : state;
-begin
-	nxtstateproc	: process(cur_state, ready, instrReg, status)
-	begin
-		oe									<= '0';	--1 data_in <= data_out, 0 data_in <= ZZ
-		addrSel 							<= '0';	-- 0 == NA, 1 == wr
-		outSel							<= "00"; -- (en, rw)
-		opregSel							<= '0'; 	-- (rd, wr)
-		instrSel							<= '0'; 	-- 0 == NA, 1 == wr
-		rw									<= '1';	-- 1 == rd, 0 == wr 	
-		vma								<= '0';
-		errorSel							<= '0';	--0 == No error, 1 == Si Error
-		regSel							<= "00000";
-		shiftSel 						<= shiftpass;
-		aluSel							<= alupass;
 
-	end process;
+	-- Build an enumerated type for the state machine
+	type state_type is (s0, s1, s2, s3, s4, s5, s6, s7);
 	
-	cuProc			: process(clk, rst, status) is
+	-- Register to hold the current state
+	signal state   : state_type;
+
+begin
+	-- Logic to advance to the next state
+	process (clk_cu, reset_cu)
 	begin
-		if rst = '1' then
-			cur_state <= rst0;
-		elsif status = "10000" then
-			cur_state <= err0;
-		elsif clk'event and clk = '1' then
-			cur_state <= nxt_state;
+		if reset_cu = '1' then
+			state <= s0;
+		elsif (rising_edge(clk_cu)) then
+			case state is
+				when s0=>
+					if data_in_cu = '1' then
+						state <= s1;
+					else
+						state <= s0;
+					end if;
+				when s1=>
+					if data_in_cu = '1' then
+						state <= s2;
+					else
+						state <= s1;
+					end if;
+				when s2=>
+					if data_in_cu = '1' then
+						state <= s3;
+					else
+						state <= s2;
+					end if;
+				when s3 =>
+					if data_in_cu = '1' then
+						state <= s4;
+					else
+						state <= s3;
+					end if;
+				when s4 =>
+					if data_in_cu = '1' then
+						state <= s5;
+					else
+						state <= s4;
+					end if;
+				when s5 =>
+					if data_in_cu = '1' then
+						state <= s6;
+					else
+						state <= s5;
+					end if;
+				when s6 =>
+					if data_in_cu = '1' then
+						state <= s7;
+					else
+						state <= s6;
+					end if;
+				when s7 =>
+					if data_in_cu = '1' then
+						state <= s0;
+					else
+						state <= s7;
+					end if;
+			end case;
 		end if;
-	
 	end process;
+	
+	-- Output depends solely on the current state
+	process (state)
+	begin
+	
+		case state is
+			when s0 =>
+				data_out_cu <= "000";
+			when s1 =>
+				data_out_cu <= "001";
+			when s2 =>
+				data_out_cu <= "010";
+			when s3 =>
+				data_out_cu <= "011";
+			when s4 =>
+				data_out_cu	<= "100";
+			when s5 =>
+				data_out_cu	<= "101";
+			when s6 =>
+				data_out_cu	<= "110";
+			when s7 =>
+				data_out_cu	<= "111";
+		end case;
+	end process;
+	
 end rtl;
