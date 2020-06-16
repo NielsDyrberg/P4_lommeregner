@@ -39,23 +39,11 @@ begin
 		elsif (rising_edge(clk_cu)) then
 			case state is
 				when s0=>
-					if ready_cu = '1' then
 						state <= s1;
-					else
-						state <= s0;
-					end if;
 				when s1=>
-					if ready_cu = '1' then
-						state <= s2;
-					else
-						state <= s1;
-					end if;
+					state <= s2;
 				when s2=>
-					if ready_cu = '1' then
-						state <= s3;
-					else
-						state <= s2;
-					end if;
+					state <= s3;
 				when s3 =>
 					if ready_cu = '1' then
 						state <= s4;
@@ -63,23 +51,11 @@ begin
 						state <= s3;
 					end if;
 				when s4 =>
-					if ready_cu = '1' then
-						state <= s5;
-					else
-						state <= s4;
-					end if;
+					state <= s5;
 				when s5 =>
-					if ready_cu = '1' then
-						state <= s6;
-					else
-						state <= s5;
-					end if;
+					state <= s6;
 				when s6 =>
-					if ready_cu = '1' then
-						state <= s7;
-					else
-						state <= s6;
-					end if;
+					state <= s7;
 				when s7 =>
 					if ready_cu = '1' then
 						state <= s0;
