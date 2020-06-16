@@ -35,7 +35,9 @@ end entity;
 architecture rtl of CU is
 
 	-- Build an enumerated type for the state machine
-	type state_type is (s0, s1, s2, s3, s4, s5, s6, s7);
+	type state_type is (
+								rst0, rst1, rst2, rst3, rst4, rst5, rst6, execute
+								);
 	
 	-- Register to hold the current state
 	signal state   : state_type;
@@ -45,38 +47,38 @@ begin
 	process (clk_cu, reset_cu)
 	begin
 		if reset_cu = '1' then
-			state <= s0;
+			state <= rst0;
 		elsif (rising_edge(clk_cu)) then
 			case state is
-				when s0=>
-					state <= s1;
+				when rst0=>
+					state <= rst1;
 						
-				when s1=>
-					state <= s2;
+				when rst1=>
+					state <= rst2;
 					
-				when s2=>
+				when rst2=>
 
-					state <= s3;
+					state <= rst3;
 					
-				when s3 =>
+				when rst3 =>
 					
-					state <= s4;
+					state <= rst4;
 					
-				when s4 =>
-					state <= s5;
+				when rst4 =>
+					state <= rst5;
 					
-				when s5 =>
+				when rst5 =>
 					if ready_cu = '1' then
-						state			<= s6;
+						state			<= rst6;
 					else
-						state			<= s5;
+						state			<= rst5;
 					end if;
 					
-				when s6 =>
-					state <= s7;
+				when rst6 =>
+					state <= execute;
 					
-				when s7 =>
-						state <= s0;
+				when execute =>
+						state <= rst0;
 					
 			end case;
 		end if;
@@ -99,24 +101,26 @@ begin
 		state_cnt_cu 			<= 16#0000#;
 		
 		case state is
-			when s0 =>
+			when rst0 =>
 				state_cnt_cu <= 16#0000#;
 				
-			when s1 =>
+			when rst1 =>
 				aluSel_cu 					<= aluZero;
+				oe_cu							<= '1';
 				state_cnt_cu <= 16#0001#;
 				
-			when s2 =>
+			when rst2 =>
 				aluSel_cu 					<= aluZero;
+				oe_cu							<= '1';
 				outSel_cu					<= wr;
 				state_cnt_cu <= 16#0002#;
 				
-			when s3 =>
+			when rst3 =>
 				outSel_cu					<= rd;
 				oe_cu							<= '1';
 				state_cnt_cu <= 16#0003#;
 				
-			when s4 =>
+			when rst4 =>
 				outSel_cu					<= rd;
 				oe_cu							<= '1';
 				regSel_cu(4 downto 3)	<= wr;
@@ -125,18 +129,18 @@ begin
 				opregSel_cu					<= '1';
 				state_cnt_cu	<= 16#0004#;
 				
-			when s5 =>
+			when rst5 =>
 				vma_cu						<= '1';
 				state_cnt_cu	<= 16#0005#;
 				
-			when s6 =>
+			when rst6 =>
 				vma_cu						<= '1';
 				instrSel_cu 				<=	'1';
 				state_cnt_cu	<= 16#0006#;
 				
-			when s7 =>
+			when execute =>
 			
-				state_cnt_cu	<= 16#0007#;
+				state_cnt_cu	<= 16#0100#;
 				
 		end case;
 	end process;
