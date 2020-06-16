@@ -150,7 +150,7 @@ begin
 											);
 
 
-	aSingBus	: process(regSel_cpu, outSel_cpu)
+	SingleOutBus	: process(regSel_cpu, outSel_cpu)
 	begin
 		if (regSel_cpu(4 downto 3) = "10") then
 			data_out_cpu	<= outReg_q;

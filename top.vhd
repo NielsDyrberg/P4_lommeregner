@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 
 entity top is
 	port(
-		--data											: inout std_logic_vector(19 downto 0);
+		data											: inout std_logic_vector(19 downto 0);
 		clk											:	in  std_logic;
 		rst_but										:	in  std_logic;
 		clk_trig										:	out std_logic;
@@ -32,10 +32,12 @@ architecture rtl of top is
 	signal	clk_l, rst_but_sig			: std_logic := '0';
 	signal	ready, error, rw, en, oe	: std_logic;	
 	signal	addr								: std_logic;
-	signal	data_in							: std_logic_vector(19 downto 0);
-	signal	data_out							: std_logic_vector(19 downto 0);
+	signal	data_in, data_out				: std_logic_vector(19 downto 0);
 	signal	but1_sig, but2_sig, 
 				but3_sig							: std_logic := '0';
+				
+	SIGNAL  bi_a  : STD_LOGIC_VECTOR (19 DOWNTO 0);  -- DFF that stores value from input.
+	SIGNAL  bi_b  : STD_LOGIC_VECTOR (19 DOWNTO 0);  -- DFF that stores feedback value.
 
 	
 	component cpu
@@ -60,6 +62,8 @@ begin
 	but2_sig					<= not(but2);
 	but3_sig					<= not(but3);
 	
+--	data_in					<= data;
+	
 	
 	
 	cpu1	: cpu	port map (	clk_cpu			=> clk_l,
@@ -69,7 +73,7 @@ begin
 									error_cpu		=> open, 
 									rw_cpu			=> open,
 									en_cpu			=> open, 
-									oe_cpu			=> open,
+									oe_cpu			=> oe,
 									addr_cpu			=> open,
 									
 									data_in_cpu		=> data_in,
@@ -96,6 +100,34 @@ begin
 							  RESET => rst_but,
 							  CLK_OUT => clk_trig	-- CLK ud
 							  ); 
+	
+--	bidir 	: process(oe, data_out) is
+--	begin
+--		if (oe = '1') then 
+--			data <= data_out;
+--		else 
+--			data <= (others => 'Z');
+--		end if;
+--	end process;
+	
+	
+	PROCESS(clk)
+    BEGIN
+    IF clk = '1' AND clk'EVENT THEN  -- Creates the flipflops
+        bi_a <= data_out;
+        data_in <= bi_b;
+        END IF;
+    END PROCESS;    
+    PROCESS (oe, data)          -- Behavioral representation of tri-states.
+        BEGIN
+        IF( oe = '0') THEN
+            data <= (others => 'Z');
+            bi_b <= data;
+        ELSE
+            data <= bi_a;
+            bi_b <= data;
+        END IF;
+    END PROCESS;
 	
 	
 	ready		<= but3_sig;

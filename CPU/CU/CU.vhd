@@ -36,7 +36,10 @@ architecture rtl of CU is
 
 	-- Build an enumerated type for the state machine
 	type state_type is (
-								rst0, rst1, rst2, rst3, rst4, rst5, rst6, execute
+								rst00, rst01, rst02, rst03, rst04, rst05, rst06, execute,
+								
+								incPc00, incPc01, incPc02, incPc03, incPc04, incPc05, incPc06, incPc07, incPc08,
+								incPc09, incPc0A, incPc0B, incPc0C
 								);
 	
 	-- Register to hold the current state
@@ -47,40 +50,126 @@ begin
 	process (clk_cu, reset_cu)
 	begin
 		if reset_cu = '1' then
-			state <= rst0;
+			state <= rst00;
 		elsif (rising_edge(clk_cu)) then
 			case state is
-				when rst0=>
-					state <= rst1;
+			
+				--###############      Restart      ###############--
+				when rst00=>
+					state <= rst01;
 						
-				when rst1=>
-					state <= rst2;
+				when rst01=>
+					state <= rst02;
 					
-				when rst2=>
+				when rst02=>
 
-					state <= rst3;
+					state <= rst03;
 					
-				when rst3 =>
+				when rst03 =>
 					
-					state <= rst4;
+					state <= rst04;
 					
-				when rst4 =>
-					state <= rst5;
+				when rst04 =>
+					state <= rst05;
 					
-				when rst5 =>
+				when rst05 =>
 					if ready_cu = '1' then
-						state			<= rst6;
+						state			<= rst06;
 					else
-						state			<= rst5;
+						state			<= rst05;
 					end if;
 					
-				when rst6 =>
+				when rst06 =>
 					state <= execute;
-					
+				
+				--###############      Execute      ###############--
 				when execute =>
-						state <= rst0;
+					case instrReg_cu(19 downto 15) is
+						when "00000" =>												--NA
+							state						<= incpc00;
+							
+--						when 	"00001" | "00010" |
+--								"00011" | "00100" |
+--								"00101" |
+--								"01000" | "01001"	
+--										 =>												-- Simple arytmetik
+--							state						<= arr2;
+--						
+--						when	"00110" | "00111"
+--										 =>												--inc % dec
+--							state						<= incDec2;
+--							
+--						when "01010" =>												--LOAD
+--							state 					<= load2;
+--								
+--						when "01011" =>												--STORE	
+--							state 					<= store2;
+--							
+--						when 	"01100" | "01101" |
+--								"01110" =>												--Compare
+--							state						<= com2;
+--						
+--						when "01111" =>												--JMP
+--							state						<= jmp2;
+--							
+--						when "10010" =>												--COPY
+--							state						<= cp2;
+--						
+--						when "10011" =>												--LOADI
+--							state 					<= loadi2;
+							
+						when others =>
+							state 					<= incPc00;
+						
+					end case;
+				
+				--###############       incPC       ###############--
+				when incPc00 =>
+					state					<= incPc01;
+				
+				when incPc01 =>
+					state					<= incPc02;
+				
+				when incPc02 =>
+					state					<= incPc03;
+				
+				when incPc03 =>
+					state					<= incPc04;
+					
+				when incPc04 =>
+					state					<= incPc05;
+					
+				when incPc05 =>
+					state					<= incPc06;
+				
+				when incPc06 =>
+					state					<= incPc07;
+				
+				when incPc07 =>
+					state					<= incPc08;
+				
+				when incPc08 =>
+					state					<= incPc09;
+				
+				when incPc09 =>
+					if ready_cu = '1' then
+						state				<= incPc0A;
+					else
+						state				<= incPc09;
+					end if;
+				
+				when incPc0A =>
+					state					<= incPc0B;
+					
+				when incPc0B =>
+					state					<= incPc0C;
+					
+				when incPc0C =>
+					state					<= execute;
+					
 					
 			end case;
+			
 		end if;
 	end process;
 	
@@ -97,30 +186,30 @@ begin
 		errorSel_cu				<= '0';	--0 == No error, 1 == Si Error
 		regSel_cu				<= "00000";
 		shiftSel_cu 			<= shiftpass;
-		aluSel_cu				<= alupass;
+		aluSel_cu				<= aluZero;
 		state_cnt_cu 			<= 16#0000#;
 		
 		case state is
-			when rst0 =>
+			when rst00 =>
 				state_cnt_cu <= 16#0000#;
 				
-			when rst1 =>
+			when rst01 =>
 				aluSel_cu 					<= aluZero;
 				oe_cu							<= '1';
 				state_cnt_cu <= 16#0001#;
 				
-			when rst2 =>
+			when rst02 =>
 				aluSel_cu 					<= aluZero;
 				oe_cu							<= '1';
 				outSel_cu					<= wr;
 				state_cnt_cu <= 16#0002#;
 				
-			when rst3 =>
+			when rst03 =>
 				outSel_cu					<= rd;
 				oe_cu							<= '1';
 				state_cnt_cu <= 16#0003#;
 				
-			when rst4 =>
+			when rst04 =>
 				outSel_cu					<= rd;
 				oe_cu							<= '1';
 				regSel_cu(4 downto 3)	<= wr;
@@ -129,18 +218,90 @@ begin
 				opregSel_cu					<= '1';
 				state_cnt_cu	<= 16#0004#;
 				
-			when rst5 =>
+			when rst05 =>
 				vma_cu						<= '1';
 				state_cnt_cu	<= 16#0005#;
 				
-			when rst6 =>
+			when rst06 =>
 				vma_cu						<= '1';
 				instrSel_cu 				<=	'1';
 				state_cnt_cu	<= 16#0006#;
 				
+			--###############      Execute      ###############--	
 			when execute =>
-			
 				state_cnt_cu	<= 16#0100#;
+				
+			--###############       incPC       ###############--
+			when incPc00 =>
+				state_cnt_cu	<= 16#0200#;
+				regSel_cu(4 downto 3)	<= rd;
+				regSel_cu(2 downto 0)	<= progReg;
+				oe_cu							<= '1';
+			
+			when incPc01 =>
+				state_cnt_cu	<= 16#0201#;
+				regSel_cu(4 downto 3)	<= rd;
+				regSel_cu(2 downto 0)	<= progReg;
+				oe_cu							<= '1';
+				aluSel_cu					<= aluAcc;
+			
+			when incPc02 =>
+				state_cnt_cu	<= 16#0202#;
+				regSel_cu(4 downto 3)	<= rd;
+				regSel_cu(2 downto 0)	<= progReg;
+				oe_cu							<= '1';
+				aluSel_cu					<= aluAcc;
+				outSel_cu					<=	wr;
+			
+			when incPc03 =>
+				state_cnt_cu	<= 16#0203#;
+				regSel_cu(4 downto 3)	<= rd;
+				regSel_cu(2 downto 0)	<= progReg;
+				oe_cu							<= '1';
+				aluSel_cu					<= aluAcc;
+				
+			when incPc04 =>
+				state_cnt_cu	<= 16#0204#;
+				
+			when incPc05 =>
+				state_cnt_cu	<= 16#0205#;
+				outSel_cu					<= rd;
+				oe_cu							<= '1';
+			
+			when incPc06 =>
+				state_cnt_cu	<= 16#0206#;
+				outSel_cu					<= rd;
+				oe_cu							<= '1';
+				regSel_cu(4 downto 3)	<= wr;
+				regSel_cu(2 downto 0)	<= progReg;
+				addrSel_cu					<= '1';
+			
+			when incPc07 =>
+				state_cnt_cu	<= 16#0207#;
+				outSel_cu					<= rd;
+				oe_cu							<= '1';
+			
+			when incPc08 =>
+				state_cnt_cu	<= 16#0208#;
+			
+			when incPc09 =>
+				state_cnt_cu	<= 16#0209#;
+				vma_cu						<= '1';
+			
+			when incPc0A =>
+				state_cnt_cu	<= 16#020A#;
+				vma_cu						<= '1';
+				instrSel_cu					<= '1';
+				
+				
+			when incPc0B =>
+				state_cnt_cu	<= 16#020B#;
+				vma_cu						<= '1';
+				
+				
+			when incPc0C =>
+				state_cnt_cu	<= 16#020C#;
+
 				
 		end case;
 	end process;
