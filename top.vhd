@@ -32,8 +32,8 @@ architecture rtl of top is
 	signal	clk_l, rst_but_sig			: std_logic := '0';
 	signal	ready, error, rw, en, oe	: std_logic;	
 	signal	addr								: std_logic;
-	signal	data_in							: std_logic;
-	signal	data_out							: std_logic_vector(2 downto 0);
+	signal	data_in							: std_logic_vector(19 downto 0);
+	signal	data_out							: std_logic_vector(19 downto 0);
 	signal	but1_sig, but2_sig, 
 				but3_sig							: std_logic := '0';
 
@@ -48,8 +48,8 @@ architecture rtl of top is
 				en_cpu, oe_cpu			: out std_logic;	
 				addr_cpu					: out std_logic_vector(11 downto 0);
 
-				data_in_cpu				: in std_logic;
-				data_out_cpu			: out	std_logic_vector(2 downto 0)
+				data_in_cpu				: in 	std_logic_vector(19 downto 0);
+				data_out_cpu			: out	std_logic_vector(19 downto 0)
 			);
 	end component;
 
@@ -98,7 +98,6 @@ begin
 							  ); 
 	
 	
-	data_in 	<= sw1;
 	ready		<= but3_sig;
 	
 end rtl;

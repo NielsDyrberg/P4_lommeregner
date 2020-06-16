@@ -15,8 +15,8 @@ entity CPU is
 				en_cpu, oe_cpu			: out std_logic;	
 				addr_cpu					: out std_logic_vector(11 downto 0);
 				
-				data_in_cpu				: in std_logic;
-				data_out_cpu			: out std_logic_vector(2 downto 0)
+				data_in_cpu				: in  std_logic_vector(19 downto 0);
+				data_out_cpu			: out std_logic_vector(19 downto 0)
 	);
 	
 end CPU;
@@ -24,8 +24,15 @@ end CPU;
 
 architecture rtl of CPU is
 
-	signal instrReg_cpu	:	std_logic_vector(19 downto 0) := (others => '0');
+	signal IC_cpu			:	std_logic_vector(19 downto 0) := (others => '0');
 	signal status_cpu		:	std_logic_vector(4 downto 0)	:= (others => '0');
+	signal OA_cpu, AO_cpu:	std_logic_vector(19 downto 0) := (others => '0');
+	signal aluSel_cpu		:	std_logic_vector(3 downto 0)	:= (others => '0');
+	signal addrSel_cpu	:	std_logic							:= '0';
+	signal opregSel_cpu	:	std_logic							:= '0';
+	signal instrSel_cpu	:	std_logic							:= '0';
+	signal outSel_cpu		:	std_logic_vector(1 downto 0)	:= (others => '0');
+	signal regSel_cpu		:	std_logic_vector(4 downto 0)	:=	(others => '0');
 
 	component cu
 		port(
@@ -46,6 +53,51 @@ architecture rtl of CPU is
 				instrReg_cu							: in 	std_logic_vector(19 downto 0)
 			);
 	end component;
+	
+	component ALU
+		Port(
+			INPUT_A 			: in STD_LOGIC_VECTOR (19 downto 0) ;
+			INPUT_B 			: in STD_LOGIC_VECTOR (19 downto 0) ;
+			SELECTPIN 		: in STD_LOGIC_VECTOR (3 downto 0);
+			OUTPUT 			: out STD_LOGIC_VECTOR (19 downto 0); 
+			STATUSPIN 		: out STD_LOGIC_VECTOR (4 downto 0) 
+			);
+	end component;
+			
+	component reg_15
+		port( 
+			D 										: in std_logic_vector(11 downto 0);
+			E 										: in std_logic;
+			Q 										: out std_logic_vector(11 downto 0)
+		);
+	end component;
+
+	component reg_20
+		port( 
+			D 										: in std_logic_vector(19 downto 0);
+			E 										: in std_logic;
+			Q 										: out std_logic_vector(19 downto 0)
+		);
+	end component;
+
+	component reg_20_ex is
+		port( 
+			D 										: in std_logic_vector(19 downto 0) := (others => '0');
+			E 										: in std_logic	:= '0';
+			rw										: in std_logic := '0';
+			Q 										: out std_logic_vector(19 downto 0)
+		);
+	end component;
+
+	component regArray_8 is
+	port(	
+		EN										: IN STD_LOGIC;-- Register Array Enable
+		WE										: IN STD_LOGIC;-- Aktiver skriving
+		AD										: IN STD_LOGIC_VECTOR(2 DOWnTO 0); -- Adresse vektor
+		D										: IN STD_LOGIC_VECTOR(19 DOWNTO 0); -- Data input
+		Q										: out STD_LOGIC_VECTOR(19 DOWNTO 0)
+	); --Data output
+	end component;
 
 
 begin
@@ -57,21 +109,55 @@ begin
 									
 									rw_cu			=> open, 
 									vma_cu		=> open, 
-									opregSel_cu	=> open, 
+									opregSel_cu	=> opregSel_cpu, 
 									errorSel_cu	=> open, 
-									addrSel_cu	=> open, 
-									instrSel_cu	=> open, 
+									addrSel_cu	=> addrSel_cpu, 
+									instrSel_cu	=> instrSel_cpu, 
 									oe_cu			=> open,
-									outSel_cu	=> open,
-									regSel_cu	=> open,
+									outSel_cu	=> outSel_cpu,
+									regSel_cu	=> regSel_cpu,
 									shiftSel_cu	=> open,
-									aluSel_cu	=> open,
+									aluSel_cu	=> aluSel_cpu,
 									status_cu	=> status_cpu,
-									instrReg_cu	=> instrReg_cpu
+									instrReg_cu	=> IC_cpu
 								);
 	
+	alu1	: ALU port map (	INPUT_A		=> data_in_cpu,
+									INPUT_B		=> OA_cpu,
+									SELECTPIN	=> aluSel_cpu,
+									OUTPUT		=> AO_cpu,
+									STATUSPIN	=> status_cpu
+								
+								);
+	
+	addrReg	: reg_15 port map (	D			=>	data_in_cpu(11 downto 0),
+											E			=>	addrSel_cpu,
+											Q			=>	addr_cpu
+											);
 
-
+	opReg		: reg_20 port map (	D			=> data_in_cpu,
+											E			=> opregSel_cpu,
+											Q			=> OA_cpu
+											);
+											
+	instrReg	: reg_20 port map (	D			=> data_in_cpu,
+											E			=> instrSel_cpu,
+											Q			=> IC_cpu
+											);
+	outReg	: reg_20_ex port map (
+											D			=> AO_cpu,
+											E			=> outSel_cpu(1),
+											rw			=> outSel_cpu(0),
+											Q			=> data_out_cpu
+											);
+	internMen: regArray_8 port map(
+											EN			=> regSel_cpu(4),
+											WE			=> regSel_cpu(3),
+											AD			=> regSel_cpu(2 downto 0),
+											D			=> data_in_cpu,
+											Q			=> data_out_cpu
+											);
+	
 end rtl;
 
 
