@@ -37,10 +37,6 @@ process (EN, WE, AD)
 				Q <= Reg(omskriv);
 			end if;
 
-		elsif (EN ='0') then
-
-			Q <= (others => '-');
-
 		end if;
  
 end process ; 

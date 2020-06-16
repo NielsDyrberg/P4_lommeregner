@@ -152,10 +152,10 @@ begin
 
 	aSingBus	: process(regSel_cpu, outSel_cpu)
 	begin
-		if (regSel_cpu(4 downto 3) = "11") then
+		if (regSel_cpu(4 downto 3) = "10") then
 			data_out_cpu	<= outReg_q;
 			
-		elsif (outSel_cpu = "11") then
+		elsif (outSel_cpu = "10") then
 			data_out_cpu	<= internMen_q;
 		
 		else

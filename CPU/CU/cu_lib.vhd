@@ -18,8 +18,8 @@ package cu_lib is
 	constant aluMul		: std_logic_vector(3 downto 0) :=	"1001";
 	constant aluDiv		: std_logic_vector(3 downto 0) :=	"1010";
 	
-	constant	rd				: std_logic_vector(1 downto 0) :=	"11";
-	constant	wr				: std_logic_vector(1 downto 0) :=	"10";
+	constant	rd				: std_logic_vector(1 downto 0) :=	"10";
+	constant	wr				: std_logic_vector(1 downto 0) :=	"11";
 	constant progReg		: std_logic_vector(2 downto 0) :=	"111";
 	constant dataBuf		: std_logic_vector(2 downto 0) :=	"110";
 	
