@@ -186,7 +186,7 @@ begin
 		errorSel_cu				<= '0';	--0 == No error, 1 == Si Error
 		regSel_cu				<= "00000";
 		shiftSel_cu 			<= shiftpass;
-		aluSel_cu				<= aluZero;
+		aluSel_cu				<= aluPass;
 		state_cnt_cu 			<= 16#0000#;
 		
 		case state is
@@ -201,7 +201,8 @@ begin
 			when rst02 =>
 				aluSel_cu 					<= aluZero;
 				oe_cu							<= '1';
-				outSel_cu					<= wr;
+				outSel_cu(1)				<= '1';
+				outSel_cu(0)				<= '1';
 				state_cnt_cu <= 16#0002#;
 				
 			when rst03 =>
@@ -220,10 +221,12 @@ begin
 				
 			when rst05 =>
 				vma_cu						<= '1';
+				oe_cu							<= '1';
 				state_cnt_cu	<= 16#0005#;
 				
 			when rst06 =>
 				vma_cu						<= '1';
+				oe_cu							<= '1';
 				instrSel_cu 				<=	'1';
 				state_cnt_cu	<= 16#0006#;
 				
@@ -287,16 +290,19 @@ begin
 			when incPc09 =>
 				state_cnt_cu	<= 16#0209#;
 				vma_cu						<= '1';
+				oe_cu							<= '1';
 			
 			when incPc0A =>
 				state_cnt_cu	<= 16#020A#;
 				vma_cu						<= '1';
 				instrSel_cu					<= '1';
+				oe_cu							<= '1';
 				
 				
 			when incPc0B =>
 				state_cnt_cu	<= 16#020B#;
 				vma_cu						<= '1';
+				oe_cu							<= '1';
 				
 				
 			when incPc0C =>

@@ -35,6 +35,13 @@ architecture rtl of CPU is
 	signal regSel_cpu		:	std_logic_vector(4 downto 0)	:=	(others => '0');
 	signal outReg_q, 
 			 internMen_q	:	std_logic_vector(19 downto 0)	:= (others => '0');
+	signal addrReg_d		:	std_logic_vector(11 downto 0)	:= (others => '0');
+	Signal opReg_d,
+			 instrReg_d,
+			 internMen_d,
+			 alu_input_A 	:	std_logic_vector(19 downto 0)	:= (others => '0');
+	
+	
 	component cu
 		port(
 				clk_cu								: in	std_logic;
@@ -114,7 +121,7 @@ begin
 									instrReg_cu	=> IC_cpu
 								);
 	
-	alu1	: ALU port map (	INPUT_A		=> data_in_cpu,
+	alu1	: ALU port map (	INPUT_A		=> alu_input_A,
 									INPUT_B		=> OA_cpu,
 									SELECTPIN	=> aluSel_cpu,
 									OUTPUT		=> AO_cpu,
@@ -122,17 +129,17 @@ begin
 								
 								);
 	
-	addrReg	: reg_15 port map (	D			=>	data_in_cpu(11 downto 0),
+	addrReg	: reg_15 port map (	D			=>	addrReg_d,
 											E			=>	addrSel_cpu,
 											Q			=>	addr_cpu
 											);
 
-	opReg		: reg_20 port map (	D			=> data_in_cpu,
+	opReg		: reg_20 port map (	D			=> opReg_d,
 											E			=> opregSel_cpu,
 											Q			=> OA_cpu
 											);
 											
-	instrReg	: reg_20 port map (	D			=> data_in_cpu,
+	instrReg	: reg_20 port map (	D			=> instrReg_d,
 											E			=> instrSel_cpu,
 											Q			=> IC_cpu
 											);
@@ -145,24 +152,49 @@ begin
 											EN			=> regSel_cpu(4),
 											WE			=> regSel_cpu(3),
 											AD			=> regSel_cpu(2 downto 0),
-											D			=> data_in_cpu,
+											D			=> internMen_d,
 											Q			=> internMen_q
 											);
 
 
-	SingleOutBus	: process(regSel_cpu, outSel_cpu)
-	begin
-		if (regSel_cpu(4 downto 3) = "10") then
-			data_out_cpu	<= outReg_q;
-			
-		elsif (outSel_cpu = "10") then
-			data_out_cpu	<= internMen_q;
-		
-		else
-			data_out_cpu	<= (others => '0');
-		end if;
-		
-	end process;
+	data_out_cpu	<= outReg_q 						when regSel_cpu(4 downto 3)	= "10" 	else
+							internMen_q 					when outSel_cpu 					= "10"	else
+							(others => '0');
+	
+	addrReg_d 		<= outReg_q(11 downto 0) 		when regSel_cpu(4 downto 3) 	= "10" 	else
+							internMen_q(11 downto 0) 	when outSel_cpu 					= "10" 	else
+							(others => '0');
+	
+	opReg_d			<= outReg_q 						when regSel_cpu(4 downto 3) 	= "10" 	else
+							internMen_q 					when outSel_cpu 					= "10" 	else
+							(others => '0');
+	
+	alu_input_A		<= outReg_q 						when regSel_cpu(4 downto 3) 	= "10" 	else
+							internMen_q 					when outSel_cpu 					= "10" 	else
+							(others => '0');
+	
+	internMen_d		<= outReg_q 						when regSel_cpu(4 downto 3) 	= "10" 	else
+							data_in_cpu						when oe_cpu							= '1'		else
+							(others => '0');
+	
+	instrReg_d		<= data_in_cpu						when oe_cpu							= '1'		else
+							(others => '0');
+
+	
+	
+--	SingleOutBus	: process(regSel_cpu, outSel_cpu)
+--	begin
+--		if (regSel_cpu(4 downto 3) = "10") then
+--			data_out_cpu	<= outReg_q;
+--			
+--		elsif (outSel_cpu = "10") then
+--			data_out_cpu	<= internMen_q;
+--		
+--		else
+--			data_out_cpu	<= (others => '0');
+--		end if;
+--		
+--	end process;
 	
 end rtl;
 

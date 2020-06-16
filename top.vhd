@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 
 entity top is
 	port(
-		data											: inout std_logic_vector(19 downto 0);
+		--data											: inout std_logic_vector(19 downto 0);
 		clk											:	in  std_logic;
 		rst_but										:	in  std_logic;
 		clk_trig										:	out std_logic;
@@ -62,7 +62,7 @@ begin
 	but2_sig					<= not(but2);
 	but3_sig					<= not(but3);
 	
---	data_in					<= data;
+	data_in					<= data_out;
 	
 	
 	
@@ -111,23 +111,23 @@ begin
 --	end process;
 	
 	
-	PROCESS(clk)
-    BEGIN
-    IF clk = '1' AND clk'EVENT THEN  -- Creates the flipflops
-        bi_a <= data_out;
-        data_in <= bi_b;
-        END IF;
-    END PROCESS;    
-    PROCESS (oe, data)          -- Behavioral representation of tri-states.
-        BEGIN
-        IF( oe = '0') THEN
-            data <= (others => 'Z');
-            bi_b <= data;
-        ELSE
-            data <= bi_a;
-            bi_b <= data;
-        END IF;
-    END PROCESS;
+--	PROCESS(clk)
+--    BEGIN
+--    IF clk = '1' AND clk'EVENT THEN  -- Creates the flipflops
+--        bi_a <= data_out;
+--        data_in <= bi_b;
+--        END IF;
+--    END PROCESS;    
+--    PROCESS (oe, data)          -- Behavioral representation of tri-states.
+--        BEGIN
+--        IF( oe = '0') THEN
+--            data <= (others => 'Z');
+--            bi_b <= data;
+--        ELSE
+--            data <= bi_a;
+--            bi_b <= data;
+--        END IF;
+--    END PROCESS;
 	
 	
 	ready		<= but3_sig;
