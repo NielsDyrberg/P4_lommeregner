@@ -155,7 +155,7 @@ begin
 											WE			=> regSel_cpu(3),
 											AD			=> regSel_cpu(2 downto 0),
 											D			=> data_in_cpu,
-											Q			=> data_out_cpu
+											Q			=> open
 											);
 	
 end rtl;

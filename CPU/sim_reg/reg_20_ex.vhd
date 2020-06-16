@@ -27,7 +27,6 @@ reg : reg_20 port map (	D => D,
 								E => en,
 								Q => out_sig
 								);
-Q 	<= (others => 'Z');
 
 process(E, rw) is
 	
@@ -39,15 +38,15 @@ begin
 			
 	elsif (E = '0' and rw = '0') then
 			en <= '0';
-			Q	<= (others => 'Z');
+			Q	<= (others => '-');
 		
 	elsif (E = '1' and rw = '1') then
 			en <= '1';
-			Q	<= (others => 'Z');
+			Q	<= (others => '-');
 		
 	elsif (E = '0' and rw = '1') then
 			en <= '0';
-			Q	<= (others => 'Z');
+			Q	<= (others => '-');
 	end if;
 end process;
 
