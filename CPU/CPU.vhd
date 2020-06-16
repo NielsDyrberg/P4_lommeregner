@@ -91,12 +91,12 @@ architecture rtl of CPU is
 
 	component regArray_8 is
 	port(	
-		EN										: IN STD_LOGIC;-- Register Array Enable
-		WE										: IN STD_LOGIC;-- Aktiver skriving
-		AD										: IN STD_LOGIC_VECTOR(2 DOWnTO 0); -- Adresse vektor
+		EN										: IN STD_LOGIC;							-- Register Array Enable
+		WE										: IN STD_LOGIC;							-- Aktiver skriving
+		AD										: IN STD_LOGIC_VECTOR(2 DOWnTO 0); 	-- Adresse vektor
 		D										: IN STD_LOGIC_VECTOR(19 DOWNTO 0); -- Data input
-		Q										: out STD_LOGIC_VECTOR(19 DOWNTO 0)
-	); --Data output
+		Q										: out STD_LOGIC_VECTOR(19 DOWNTO 0)	--Data output
+	); 
 	end component;
 
 
@@ -107,13 +107,13 @@ begin
 
 									state_cnt_cu	=> open,
 									
-									rw_cu			=> open, 
-									vma_cu		=> open, 
+									rw_cu			=> rw_cpu, 
+									vma_cu		=> en_cpu, 
 									opregSel_cu	=> opregSel_cpu, 
-									errorSel_cu	=> open, 
+									errorSel_cu	=> error_cpu, 
 									addrSel_cu	=> addrSel_cpu, 
 									instrSel_cu	=> instrSel_cpu, 
-									oe_cu			=> open,
+									oe_cu			=> oe_cpu,
 									outSel_cu	=> outSel_cpu,
 									regSel_cu	=> regSel_cpu,
 									shiftSel_cu	=> open,
