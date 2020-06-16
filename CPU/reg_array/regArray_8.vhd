@@ -22,8 +22,6 @@ ARCHITECTURE Behavioral OF regArray_8 IS
 	TYPE RegArray IS array(0 TO (2**AB)-1) OF STD_LOGIC_VECTOR(DB-1 DOWNTO 0); -- definerer bredde og længde (8 x 16bit)
 	signal Reg: RegArray;
 begin
-
-Q <= (others => 'Z');
  
 process (EN, WE, AD)
 	variable omskriv : natural range 0 to (2**AB)-1; -- En variabel der kan indeholde 0-2^AB - Skal bruges for omskrivning  
@@ -41,7 +39,7 @@ process (EN, WE, AD)
 
 		elsif (EN ='0') then
 
-			Q <= (others => 'Z');
+			Q <= (others => '-');
 
 		end if;
  

@@ -33,7 +33,8 @@ architecture rtl of CPU is
 	signal instrSel_cpu	:	std_logic							:= '0';
 	signal outSel_cpu		:	std_logic_vector(1 downto 0)	:= (others => '0');
 	signal regSel_cpu		:	std_logic_vector(4 downto 0)	:=	(others => '0');
-
+	signal outReg_q, 
+			 internMen_q	:	std_logic_vector(19 downto 0)	:= (others => '0');
 	component cu
 		port(
 				clk_cu								: in	std_logic;
@@ -76,15 +77,6 @@ architecture rtl of CPU is
 		port( 
 			D 										: in std_logic_vector(19 downto 0);
 			E 										: in std_logic;
-			Q 										: out std_logic_vector(19 downto 0)
-		);
-	end component;
-
-	component reg_20_ex is
-		port( 
-			D 										: in std_logic_vector(19 downto 0) := (others => '0');
-			E 										: in std_logic	:= '0';
-			rw										: in std_logic := '0';
 			Q 										: out std_logic_vector(19 downto 0)
 		);
 	end component;
@@ -144,19 +136,33 @@ begin
 											E			=> instrSel_cpu,
 											Q			=> IC_cpu
 											);
-	outReg	: reg_20_ex port map (
+	outReg	: reg_20 port map (
 											D			=> AO_cpu,
 											E			=> outSel_cpu(1),
-											rw			=> outSel_cpu(0),
-											Q			=> data_out_cpu
+											Q			=> outReg_q
 											);
 	internMen: regArray_8 port map(
 											EN			=> regSel_cpu(4),
 											WE			=> regSel_cpu(3),
 											AD			=> regSel_cpu(2 downto 0),
 											D			=> data_in_cpu,
-											Q			=> open
+											Q			=> internMen_q
 											);
+
+
+	aSingBus	: process(regSel_cpu, outSel_cpu)
+	begin
+		if (regSel_cpu(4 downto 3) = "11") then
+			data_out_cpu	<= outReg_q;
+			
+		elsif (outSel_cpu = "11") then
+			data_out_cpu	<= internMen_q;
+		
+		else
+			data_out_cpu	<= (others => '0');
+		end if;
+		
+	end process;
 	
 end rtl;
 
