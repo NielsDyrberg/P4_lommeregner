@@ -30,7 +30,6 @@ architecture rtl of CPU is
 				reset_cu	 	: in	std_logic;
 				ready_cu		: in  std_logic;
 				
-				data_in_cu	: in	std_logic;
 				data_out_cu	: out	std_logic_vector(2 downto 0)
 			);
 	end component;
@@ -41,7 +40,6 @@ begin
 									reset_cu		=> reset_cpu,	
 									ready_cu		=> ready_cpu,
 
-									data_in_cu	=> data_in_cpu,
 									data_out_cu	=> data_out_cpu
 								);
 	

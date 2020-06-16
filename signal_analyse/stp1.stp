@@ -16,7 +16,7 @@
   <instance enabled="true" entity_name="sld_signaltap" is_auto_node="yes" name="auto_signaltap_0" source_file="sld_signaltap.vhd">
     <node_ip_info instance_id="0" mfg_id="110" node_id="0" version="6"/>
     <position_info>
-      <single attribute="active tab" value="1"/>
+      <single attribute="active tab" value="0"/>
       <single attribute="setup vertical scroll position" value="0"/>
       <single attribute="setup horizontal scroll position" value="0"/>
       <single attribute="data vertical scroll position" value="0"/>
@@ -26,13 +26,12 @@
       <single attribute="zoom offset numerator" value="130048"/>
       <single attribute="zoom offset denominator" value="1"/>
     </position_info>
-    <signal_set global_temp="1" name="signal_set: 2020/06/16 02:02:23  #0">
+    <signal_set global_temp="1" name="signal_set: 2020/06/16 02:17:34  #0">
       <clock name="clk_trig" polarity="posedge" tap_mode="classic"/>
-      <config pipeline_level="0" ram_type="AUTO" reserved_data_nodes="0" reserved_storage_qualifier_nodes="0" reserved_trigger_nodes="0" sample_depth="1024" trigger_in_enable="no" trigger_out_enable="no"/>
+      <config pipeline_level="0" ram_type="AUTO" reserved_data_nodes="0" reserved_storage_qualifier_nodes="0" reserved_trigger_nodes="0" sample_depth="2048" trigger_in_enable="no" trigger_out_enable="no"/>
       <top_entity/>
       <signal_vec>
         <trigger_input_vec>
-          <wire name="CPU:cpu1|CU:cu1|data_in_cu" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[0]" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[1]" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[2]" tap_mode="classic"/>
@@ -50,7 +49,6 @@
           <wire name="sw1" tap_mode="classic"/>
         </trigger_input_vec>
         <data_input_vec>
-          <wire name="CPU:cpu1|CU:cu1|data_in_cu" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[0]" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[1]" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[2]" tap_mode="classic"/>
@@ -68,7 +66,6 @@
           <wire name="sw1" tap_mode="classic"/>
         </data_input_vec>
         <storage_qualifier_input_vec>
-          <wire name="CPU:cpu1|CU:cu1|data_in_cu" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[0]" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[1]" tap_mode="classic"/>
           <wire name="CPU:cpu1|CU:cu1|data_out_cu[2]" tap_mode="classic"/>
@@ -90,73 +87,70 @@
         <unified_setup_data_view>
           <node data_index="5" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|clk_cpu" storage_index="5" tap_mode="classic" trigger_index="5" type="unknown"/>
           <node data_index="14" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" level-0="rising edge" name="sw1" storage_index="14" tap_mode="classic" trigger_index="14" type="unknown"/>
+          <node data_index="13" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="rst_but" storage_index="13" tap_mode="classic" trigger_index="13" type="unknown"/>
+          <node data_index="10" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but1" storage_index="10" tap_mode="classic" trigger_index="10" type="unknown"/>
+          <node data_index="11" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but2" storage_index="11" tap_mode="classic" trigger_index="11" type="unknown"/>
+          <node data_index="12" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but3" storage_index="12" tap_mode="classic" trigger_index="12" type="unknown"/>
+          <node data_index="9" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|ready_cpu" storage_index="9" tap_mode="classic" trigger_index="9" type="unknown"/>
           <node is_selected="false" level-0="alt_or" name="CPU:cpu1|data_out_cpu[2..0]" order="msb_to_lsb" radix="unsigned_dec" state="collapse" type="combinatorial">
             <node data_index="8" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[2]" storage_index="8" tap_mode="classic" trigger_index="8" type="unknown"/>
             <node data_index="7" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[1]" storage_index="7" tap_mode="classic" trigger_index="7" type="unknown"/>
             <node data_index="6" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[0]" storage_index="6" tap_mode="classic" trigger_index="6" type="unknown"/>
           </node>
-          <node data_index="13" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="rst_but" storage_index="13" tap_mode="classic" trigger_index="13" type="unknown"/>
-          <node data_index="10" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but1" storage_index="10" tap_mode="classic" trigger_index="10" type="unknown"/>
-          <node data_index="11" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but2" storage_index="11" tap_mode="classic" trigger_index="11" type="unknown"/>
-          <node data_index="12" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but3" storage_index="12" tap_mode="classic" trigger_index="12" type="unknown"/>
-          <node data_index="4" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|ready_cu" storage_index="4" tap_mode="classic" trigger_index="4" type="unknown"/>
+          <node data_index="3" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|ready_cu" storage_index="3" tap_mode="classic" trigger_index="3" type="unknown"/>
+          <node data_index="4" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|reset_cu" storage_index="4" tap_mode="classic" trigger_index="4" type="unknown"/>
           <node is_selected="false" level-0="alt_or" name="CPU:cpu1|CU:cu1|data_out_cu[2..0]" order="msb_to_lsb" radix="unsigned_dec" type="combinatorial">
-            <node data_index="3" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[2]" storage_index="3" tap_mode="classic" trigger_index="3" type="unknown"/>
-            <node data_index="2" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[1]" storage_index="2" tap_mode="classic" trigger_index="2" type="unknown"/>
-            <node data_index="1" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[0]" storage_index="1" tap_mode="classic" trigger_index="1" type="unknown"/>
+            <node data_index="2" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[2]" storage_index="2" tap_mode="classic" trigger_index="2" type="unknown"/>
+            <node data_index="1" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[1]" storage_index="1" tap_mode="classic" trigger_index="1" type="unknown"/>
+            <node data_index="0" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[0]" storage_index="0" tap_mode="classic" trigger_index="0" type="unknown"/>
           </node>
-          <node data_index="0" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_in_cu" storage_index="0" tap_mode="classic" trigger_index="0" type="unknown"/>
-          <node data_index="9" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|ready_cpu" storage_index="9" tap_mode="classic" trigger_index="9" type="unknown"/>
-          <node duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|reset_cu" tap_mode="classic" type="combinatorial"/>
         </unified_setup_data_view>
         <data_view>
-          <net data_index="6" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|clk_cpu" storage_index="6" tap_mode="classic" trigger_index="6" type="unknown"/>
-          <net data_index="15" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" level-0="rising edge" name="sw1" storage_index="15" tap_mode="classic" trigger_index="15" type="unknown"/>
+          <net data_index="5" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|clk_cpu" storage_index="5" tap_mode="classic" trigger_index="5" type="unknown"/>
+          <net data_index="14" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" level-0="rising edge" name="sw1" storage_index="14" tap_mode="classic" trigger_index="14" type="unknown"/>
+          <net data_index="13" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="rst_but" storage_index="13" tap_mode="classic" trigger_index="13" type="unknown"/>
+          <net data_index="10" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but1" storage_index="10" tap_mode="classic" trigger_index="10" type="unknown"/>
+          <net data_index="11" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but2" storage_index="11" tap_mode="classic" trigger_index="11" type="unknown"/>
+          <net data_index="12" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but3" storage_index="12" tap_mode="classic" trigger_index="12" type="unknown"/>
+          <net data_index="9" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|ready_cpu" storage_index="9" tap_mode="classic" trigger_index="9" type="unknown"/>
           <bus is_selected="false" level-0="alt_or" name="CPU:cpu1|data_out_cpu[2..0]" order="msb_to_lsb" radix="unsigned_dec" state="collapse" type="combinatorial">
-            <net data_index="9" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[2]" storage_index="9" tap_mode="classic" trigger_index="9" type="unknown"/>
-            <net data_index="8" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[1]" storage_index="8" tap_mode="classic" trigger_index="8" type="unknown"/>
-            <net data_index="7" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[0]" storage_index="7" tap_mode="classic" trigger_index="7" type="unknown"/>
+            <net data_index="8" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[2]" storage_index="8" tap_mode="classic" trigger_index="8" type="unknown"/>
+            <net data_index="7" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[1]" storage_index="7" tap_mode="classic" trigger_index="7" type="unknown"/>
+            <net data_index="6" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[0]" storage_index="6" tap_mode="classic" trigger_index="6" type="unknown"/>
           </bus>
-          <net data_index="14" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="rst_but" storage_index="14" tap_mode="classic" trigger_index="14" type="unknown"/>
-          <net data_index="11" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but1" storage_index="11" tap_mode="classic" trigger_index="11" type="unknown"/>
-          <net data_index="12" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but2" storage_index="12" tap_mode="classic" trigger_index="12" type="unknown"/>
-          <net data_index="13" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but3" storage_index="13" tap_mode="classic" trigger_index="13" type="unknown"/>
-          <net data_index="4" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|ready_cu" storage_index="4" tap_mode="classic" trigger_index="4" type="unknown"/>
+          <net data_index="3" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|ready_cu" storage_index="3" tap_mode="classic" trigger_index="3" type="unknown"/>
+          <net data_index="4" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|reset_cu" storage_index="4" tap_mode="classic" trigger_index="4" type="unknown"/>
           <bus is_selected="false" level-0="alt_or" name="CPU:cpu1|CU:cu1|data_out_cu[2..0]" order="msb_to_lsb" radix="unsigned_dec" type="combinatorial">
-            <net data_index="3" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[2]" storage_index="3" tap_mode="classic" trigger_index="3" type="unknown"/>
-            <net data_index="2" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[1]" storage_index="2" tap_mode="classic" trigger_index="2" type="unknown"/>
-            <net data_index="1" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[0]" storage_index="1" tap_mode="classic" trigger_index="1" type="unknown"/>
+            <net data_index="2" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[2]" storage_index="2" tap_mode="classic" trigger_index="2" type="unknown"/>
+            <net data_index="1" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[1]" storage_index="1" tap_mode="classic" trigger_index="1" type="unknown"/>
+            <net data_index="0" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[0]" storage_index="0" tap_mode="classic" trigger_index="0" type="unknown"/>
           </bus>
-          <net data_index="0" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_in_cu" storage_index="0" tap_mode="classic" trigger_index="0" type="unknown"/>
-          <net data_index="10" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|ready_cpu" storage_index="10" tap_mode="classic" trigger_index="10" type="unknown"/>
-          <net data_index="5" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|reset_cu" storage_index="5" tap_mode="classic" trigger_index="5" type="unknown"/>
         </data_view>
         <setup_view>
-          <net data_index="6" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|clk_cpu" storage_index="6" tap_mode="classic" trigger_index="6" type="unknown"/>
-          <net data_index="15" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" level-0="rising edge" name="sw1" storage_index="15" tap_mode="classic" trigger_index="15" type="unknown"/>
+          <net data_index="5" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|clk_cpu" storage_index="5" tap_mode="classic" trigger_index="5" type="unknown"/>
+          <net data_index="14" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" level-0="rising edge" name="sw1" storage_index="14" tap_mode="classic" trigger_index="14" type="unknown"/>
+          <net data_index="13" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="rst_but" storage_index="13" tap_mode="classic" trigger_index="13" type="unknown"/>
+          <net data_index="10" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but1" storage_index="10" tap_mode="classic" trigger_index="10" type="unknown"/>
+          <net data_index="11" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but2" storage_index="11" tap_mode="classic" trigger_index="11" type="unknown"/>
+          <net data_index="12" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but3" storage_index="12" tap_mode="classic" trigger_index="12" type="unknown"/>
+          <net data_index="9" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|ready_cpu" storage_index="9" tap_mode="classic" trigger_index="9" type="unknown"/>
           <bus is_selected="false" level-0="alt_or" name="CPU:cpu1|data_out_cpu[2..0]" order="msb_to_lsb" radix="unsigned_dec" state="collapse" type="combinatorial">
-            <net data_index="9" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[2]" storage_index="9" tap_mode="classic" trigger_index="9" type="unknown"/>
-            <net data_index="8" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[1]" storage_index="8" tap_mode="classic" trigger_index="8" type="unknown"/>
-            <net data_index="7" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[0]" storage_index="7" tap_mode="classic" trigger_index="7" type="unknown"/>
+            <net data_index="8" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[2]" storage_index="8" tap_mode="classic" trigger_index="8" type="unknown"/>
+            <net data_index="7" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[1]" storage_index="7" tap_mode="classic" trigger_index="7" type="unknown"/>
+            <net data_index="6" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|data_out_cpu[0]" storage_index="6" tap_mode="classic" trigger_index="6" type="unknown"/>
           </bus>
-          <net data_index="14" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="rst_but" storage_index="14" tap_mode="classic" trigger_index="14" type="unknown"/>
-          <net data_index="11" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but1" storage_index="11" tap_mode="classic" trigger_index="11" type="unknown"/>
-          <net data_index="12" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but2" storage_index="12" tap_mode="classic" trigger_index="12" type="unknown"/>
-          <net data_index="13" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="but3" storage_index="13" tap_mode="classic" trigger_index="13" type="unknown"/>
-          <net data_index="4" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|ready_cu" storage_index="4" tap_mode="classic" trigger_index="4" type="unknown"/>
+          <net data_index="3" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|ready_cu" storage_index="3" tap_mode="classic" trigger_index="3" type="unknown"/>
+          <net data_index="4" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|reset_cu" storage_index="4" tap_mode="classic" trigger_index="4" type="unknown"/>
           <bus is_selected="false" level-0="alt_or" name="CPU:cpu1|CU:cu1|data_out_cu[2..0]" order="msb_to_lsb" radix="unsigned_dec" type="combinatorial">
-            <net data_index="3" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[2]" storage_index="3" tap_mode="classic" trigger_index="3" type="unknown"/>
-            <net data_index="2" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[1]" storage_index="2" tap_mode="classic" trigger_index="2" type="unknown"/>
-            <net data_index="1" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[0]" storage_index="1" tap_mode="classic" trigger_index="1" type="unknown"/>
+            <net data_index="2" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[2]" storage_index="2" tap_mode="classic" trigger_index="2" type="unknown"/>
+            <net data_index="1" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[1]" storage_index="1" tap_mode="classic" trigger_index="1" type="unknown"/>
+            <net data_index="0" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_out_cu[0]" storage_index="0" tap_mode="classic" trigger_index="0" type="unknown"/>
           </bus>
-          <net data_index="0" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|data_in_cu" storage_index="0" tap_mode="classic" trigger_index="0" type="unknown"/>
-          <net data_index="10" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_selected="false" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|ready_cpu" storage_index="10" tap_mode="classic" trigger_index="10" type="unknown"/>
-          <net data_index="5" duplicate_name_allowed="false" is_data_input="true" is_node_valid="true" is_storage_input="true" is_trigger_input="true" name="CPU:cpu1|CU:cu1|reset_cu" storage_index="5" tap_mode="classic" trigger_index="5" type="unknown"/>
         </setup_view>
         <trigger_in_editor/>
         <trigger_out_editor/>
       </presentation>
-      <trigger attribute_mem_mode="false" gap_record="true" global_temp="1" name="trigger: 2020/06/16 02:02:23  #1" position="pre" power_up_trigger_mode="false" record_data_gap="true" segment_size="1024" storage_mode="off" storage_qualifier_disabled="no" storage_qualifier_port_is_pin="true" storage_qualifier_port_name="auto_stp_external_storage_qualifier" storage_qualifier_port_tap_mode="classic" trigger_type="circular">
+      <trigger attribute_mem_mode="false" gap_record="true" global_temp="1" name="trigger: 2020/06/16 02:17:34  #1" position="pre" power_up_trigger_mode="false" record_data_gap="true" segment_size="512" storage_mode="off" storage_qualifier_disabled="no" storage_qualifier_port_is_pin="true" storage_qualifier_port_name="auto_stp_external_storage_qualifier" storage_qualifier_port_tap_mode="classic" trigger_type="circular">
         <power_up_trigger position="pre" storage_qualifier_disabled="no"/>
         <events use_custom_flow_control="no">
           <level enabled="yes" name="condition1" type="basic">'sw1' == rising edge
@@ -166,8 +160,8 @@
           </level>
         </events>
         <storage_qualifier_events>
-          <transitional>1111111111111111
-            <pwr_up_transitional>1111111111111111</pwr_up_transitional>
+          <transitional>111111111111111
+            <pwr_up_transitional>111111111111111</pwr_up_transitional>
           </transitional>
           <storage_qualifier_level type="basic">
             <power_up>

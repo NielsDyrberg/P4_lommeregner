@@ -17,7 +17,6 @@ entity CU is
 		reset_cu	 	: in	std_logic;
 		ready_cu		: in  std_logic;
 		
-		data_in_cu	: in	std_logic;
 		data_out_cu	: out	std_logic_vector(2 downto 0)
 	);
 	
@@ -40,49 +39,49 @@ begin
 		elsif (rising_edge(clk_cu)) then
 			case state is
 				when s0=>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s1;
 					else
 						state <= s0;
 					end if;
 				when s1=>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s2;
 					else
 						state <= s1;
 					end if;
 				when s2=>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s3;
 					else
 						state <= s2;
 					end if;
 				when s3 =>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s4;
 					else
 						state <= s3;
 					end if;
 				when s4 =>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s5;
 					else
 						state <= s4;
 					end if;
 				when s5 =>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s6;
 					else
 						state <= s5;
 					end if;
 				when s6 =>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s7;
 					else
 						state <= s6;
 					end if;
 				when s7 =>
-					if data_in_cu = '1' then
+					if ready_cu = '1' then
 						state <= s0;
 					else
 						state <= s7;

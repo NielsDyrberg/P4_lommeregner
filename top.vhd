@@ -79,7 +79,7 @@ begin
 
 	CLK_Divider_1	: entity work.clk_divider 	--hoved_clk 
 		
-				GENERIC MAP ( TCOUNT => 25000000, 			-- Hvor mange den skal tælle til inden den giver et clk output
+				GENERIC MAP ( TCOUNT => 15000000, 			-- Hvor mange den skal tælle til inden den giver et clk output
 								  N_BITS => 26 )					-- Variable hvor antal TCOUNT kan være i
 								  
 				PORT MAP ( CLK_IN => clk,						-- Clokken ind
