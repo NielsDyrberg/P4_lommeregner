@@ -10,8 +10,18 @@ entity top is
 		rst_but										:	in  std_logic;
 		clk_trig										:	out std_logic;
 		
-		-- DEBUGING
+		SEG0			: out STD_LOGIC_VECTOR(6 downto 0);
+		SEG1			: out STD_LOGIC_VECTOR(6 downto 0);
+		SEG2			: out STD_LOGIC_VECTOR(6 downto 0);
+		SEG3			: out STD_LOGIC_VECTOR(6 downto 0);
+		SEG4			: out STD_LOGIC_VECTOR(6 downto 0);
+		SEG5			: out STD_LOGIC_VECTOR(6 downto 0);
+		col_line 	: in  std_logic_vector(3 downto 0);
+		row_line 	: out std_logic_vector(3 downto 0);
 		
+		
+		-- DEBUGING
+		but1,but2,but3								: in std_logic;
 		sw1											:	in std_logic -- Benyttes til at trigger data_in
 	);
 
@@ -24,24 +34,45 @@ architecture rtl of top is
 	signal	addr								: std_logic;
 	signal	data_in							: std_logic;
 	signal	data_out							: std_logic_vector(2 downto 0);
+	signal	but1_sig, but2_sig, 
+				but3_sig							: std_logic := '0';
 
 	
 	component cpu
 		port(
-				clk_cpu			: in	std_logic;
-				data_in_cpu		: in	std_logic;
-				reset_cpu	 	: in	std_logic;
-				data_out_cpu	: out	std_logic_vector(2 downto 0)
+				clk_cpu					: in	std_logic;
+				reset_cpu				: in	std_logic;
+				ready_cpu				: in  STD_LOGIC;
+
+				error_cpu, rw_cpu, 
+				en_cpu, oe_cpu			: out std_logic;	
+				addr_cpu					: out std_logic_vector(11 downto 0);
+
+				data_in_cpu				: in std_logic;
+				data_out_cpu			: out	std_logic_vector(2 downto 0)
 			);
 	end component;
 
 begin
 
 	rst_but_sig				<= not(rst_but);
+	but1_sig					<= not(but1);
+	but2_sig					<= not(but2);
+	but3_sig					<= not(but3);
+	
+	
 	
 	cpu1	: cpu	port map (	clk_cpu			=> clk_l,
-									data_in_cpu		=> data_in,
 									reset_cpu		=> rst_but_sig,
+									ready_cpu		=> ready,
+									
+									error_cpu		=> open, 
+									rw_cpu			=> open,
+									en_cpu			=> open, 
+									oe_cpu			=> open,
+									addr_cpu			=> open,
+									
+									data_in_cpu		=> data_in,
 									data_out_cpu	=> data_out
 								);
 
@@ -67,8 +98,9 @@ begin
 							  ); 
 	
 	
-	data_in <= sw1;
-	 
+	data_in 	<= sw1;
+	ready		<= but3_sig;
+	
 end rtl;
 
 

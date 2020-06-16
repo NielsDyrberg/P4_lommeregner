@@ -14,8 +14,10 @@ entity CU is
 
 	port(
 		clk_cu		: in	std_logic;
-		data_in_cu	: in	std_logic;
 		reset_cu	 	: in	std_logic;
+		ready_cu		: in  std_logic;
+		
+		data_in_cu	: in	std_logic;
 		data_out_cu	: out	std_logic_vector(2 downto 0)
 	);
 	
