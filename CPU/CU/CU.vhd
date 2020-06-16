@@ -13,11 +13,11 @@ use work.cu_lib.all;
 entity CU is
 
 	port(
-		clk_cu		: in	std_logic;
-		reset_cu	 	: in	std_logic;
-		ready_cu		: in  std_logic;
+		clk_cu								: in	std_logic;
+		reset_cu	 							: in	std_logic;
+		ready_cu								: in  std_logic;
 		
-		data_out_cu	: out	std_logic_vector(2 downto 0);
+		state_cnt_cu						: out	integer;
 		
 		rw_cu, vma_cu, opregSel_cu, 
 		errorSel_cu, addrSel_cu, 
@@ -96,25 +96,25 @@ begin
 		regSel_cu				<= "00000";
 		shiftSel_cu 			<= shiftpass;
 		aluSel_cu				<= alupass;
-		data_out_cu 			<= "000";
+		state_cnt_cu 			<= 16#0000#;
 		
 		case state is
 			when s0 =>
-				data_out_cu <= "000";
+				state_cnt_cu <= 16#0000#;
 				
 			when s1 =>
 				aluSel_cu 					<= aluZero;
-				data_out_cu <= "001";
+				state_cnt_cu <= 16#0001#;
 				
 			when s2 =>
 				aluSel_cu 					<= aluZero;
 				outSel_cu					<= wr;
-				data_out_cu <= "010";
+				state_cnt_cu <= 16#0002#;
 				
 			when s3 =>
 				outSel_cu					<= rd;
 				oe_cu							<= '1';
-				data_out_cu <= "011";
+				state_cnt_cu <= 16#0003#;
 				
 			when s4 =>
 				outSel_cu					<= rd;
@@ -123,20 +123,20 @@ begin
 				regSel_cu(2 downto 0)	<= progReg;
 				addrSel_cu					<=	'1';
 				opregSel_cu					<= '1';
-				data_out_cu	<= "100";
+				state_cnt_cu	<= 16#0004#;
 				
 			when s5 =>
 				vma_cu						<= '1';
-				data_out_cu	<= "101";
+				state_cnt_cu	<= 16#0005#;
 				
 			when s6 =>
 				vma_cu						<= '1';
 				instrSel_cu 				<=	'1';
-				data_out_cu	<= "110";
+				state_cnt_cu	<= 16#0006#;
 				
 			when s7 =>
 			
-				data_out_cu	<= "111";
+				state_cnt_cu	<= 16#0007#;
 				
 		end case;
 	end process;

@@ -33,7 +33,7 @@ architecture rtl of CPU is
 				reset_cu	 							: in	std_logic;
 				ready_cu								: in  std_logic;
 				
-				data_out_cu							: out	std_logic_vector(2 downto 0);
+				state_cnt_cu						: out	integer;
 				
 				rw_cu, vma_cu, opregSel_cu, 
 				errorSel_cu, addrSel_cu, 
@@ -53,7 +53,7 @@ begin
 									reset_cu		=> reset_cpu,	
 									ready_cu		=> ready_cpu,
 
-									data_out_cu	=> data_out_cpu,
+									state_cnt_cu	=> open,
 									
 									rw_cu			=> open, 
 									vma_cu		=> open, 
